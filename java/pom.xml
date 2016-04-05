@@ -90,6 +90,25 @@
 							<include>${project.build.finalName}.jar</include>
 						</resource>
 					</resources>
+
+					<imageName>docker-registry.products.vistaprint.io/storefront-product-service:${project.version}
+					</imageName>
+					<baseImage>docker-registry.products.vistaprint.io/java-alpine:1.0.1</baseImage>
+					<serverId>vp-product-docker-registry</serverId>
+					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+					<registryUrl>https://docker-registry.products.vistaprint.io/</registryUrl>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.basedir}/deploy</directory>
+							<include>newrelic.yml</include>
+						</resource>
+					</resources>
 				</configuration>
 			</plugin>
 		</plugins>

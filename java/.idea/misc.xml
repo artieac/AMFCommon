@@ -10,6 +10,10 @@
           <option name="goal" value="com.spotify:docker-maven-plugin:0.2.3:build" />
           <option name="projectPath" value="$PROJECT_DIR$/pom.xml" />
         </MavenCompilerTask>
+        <MavenCompilerTask>
+          <option name="goal" value="com.spotify:docker-maven-plugin:0.3.5:build" />
+          <option name="projectPath" value="$PROJECT_DIR$/pom.xml" />
+        </MavenCompilerTask>
       </set>
     </option>
     <option name="afterRebuildTask">
