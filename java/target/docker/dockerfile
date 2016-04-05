@@ -1,0 +1,8 @@
+# Pull base image.
+FROM frolvlad/alpine-oraclejdk8:latest
+
+VOLUME /tmp
+
+ADD gs-spring-boot-docker-0.1.0.jar oauth.jar
+RUN sh -c 'touch /oauth.jar'
+ENTRYPOINT ["java", "-Djava.security.egd-file:/dev/./urandom","-jar","/oauth.jar"]

@@ -147,6 +147,22 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// </summary>
         public AccessToken AccessToken { get; set; }
 
+        public AccessToken GrantAccessToken(Consumer consumer)
+        {
+            if(consumer != null)
+            {
+                if(this.IsAuthorized() == true)
+                {
+                    AccessToken newAccessToken = new AccessToken();
+                    newAccessToken.Grant(consumer, this);
+                    this.AccessToken = newAccessToken;
+                    this.State = TokenState.AccessGranted;
+                }
+            }
+
+            return this.AccessToken;
+        }
+
         public bool IsAuthorized()
         {
             bool retVal = false;

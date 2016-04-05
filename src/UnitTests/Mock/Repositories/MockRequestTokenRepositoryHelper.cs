@@ -40,17 +40,17 @@ namespace AlwaysMoveForward.OAuth.UnitTests.Mock.Repositories
             return retVal;
         }
 
-        public static AccessToken GenerateAccessToken(string accessToken)
-        {
-            AccessToken retVal = new AccessToken();
-            retVal.ConsumerKey = ConsumerConstants.TestConsumerKey;
-            retVal.DateGranted = DateTime.Now;
-            retVal.ExpirationDate = DateTime.Now.AddYears(5);
-            retVal.Token = accessToken;
-            retVal.Secret = TokenConstants.TestAccessTokenSecret;
-            retVal.Realm = TokenConstants.TestRealm;
-            return retVal;
-        }
+        //public static AccessToken GenerateAccessToken(string accessToken)
+        //{
+        //    AccessToken retVal = new AccessToken();          
+        //    retVal.ConsumerKey = ConsumerConstants.TestConsumerKey;
+        //    retVal.DateGranted = DateTime.Now;
+        //    retVal.ExpirationDate = DateTime.Now.AddYears(5);
+        //    retVal.Token = accessToken;
+        //    retVal.Secret = TokenConstants.TestAccessTokenSecret;
+        //    retVal.Realm = TokenConstants.TestRealm;
+        //    return retVal;
+        //}
 
 
         public static RequestToken GenerateRequestToken(string consumerKey, string tokenValue, string requestTokenSecret, string verifierCode, string accessToken)

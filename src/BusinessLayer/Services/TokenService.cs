@@ -293,21 +293,7 @@ namespace AlwaysMoveForward.OAuth.BusinessLayer.Services
                 {
                     Consumer tokenConsumer = this.ConsumerRepository.GetByConsumerKey(authorizedRequestToken.ConsumerKey);
 
-                    AccessToken newAccessToken = new AccessToken
-                    {
-                        ConsumerKey = authorizedRequestToken.ConsumerKey,
-                        DateGranted = DateTime.UtcNow,
-                        ExpirationDate = DateTime.UtcNow.AddHours(tokenConsumer.AccessTokenLifetime),
-                        Realm = authorizedRequestToken.Realm,
-                        Token = Guid.NewGuid().ToString(),
-                        Secret = Guid.NewGuid().ToString(),
-                        UserName = authorizedRequestToken.UserName,
-                        UserId = authorizedRequestToken.UserId
-                    };
-
-                    authorizedRequestToken.AccessToken = newAccessToken;
-                    authorizedRequestToken.State = TokenState.AccessGranted;
-
+                    authorizedRequestToken.GrantAccessToken(tokenConsumer);
                     authorizedRequestToken = this.RequestTokenRepository.Save(authorizedRequestToken);
 
                     if (authorizedRequestToken != null && authorizedRequestToken.AccessToken != null)

@@ -24,12 +24,12 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
         /// <summary>
         /// Gets or sets the database id
         /// </summary>
-        public long Id { get; set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// The date and time that this access token was granted
         /// </summary>
-        public DateTime DateGranted { get; set; }
+        public DateTime DateGranted { get; private set; }
 
         /// <summary>
         /// Gets or sets the expiration date
@@ -117,6 +117,18 @@ namespace AlwaysMoveForward.OAuth.Common.DomainModel
 
                 return retVal;
             }
+        }
+
+        public void Grant(Consumer consumer, RequestToken authorizedRequestToken)
+        {
+            this.ConsumerKey = consumer.ConsumerKey;
+            this.DateGranted = DateTime.UtcNow;
+            this.ExpirationDate = DateTime.UtcNow.AddHours(consumer.AccessTokenLifetime);
+            this.Realm = authorizedRequestToken.Realm;
+            this.Token = Guid.NewGuid().ToString();
+            this.Secret = Guid.NewGuid().ToString();
+            this.UserName = authorizedRequestToken.UserName;
+            this.UserId = authorizedRequestToken.UserId;
         }
     }
 }

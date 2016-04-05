@@ -14,6 +14,19 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
     [TestFixture]
     public class RequestTokenRepositoryTests : RepositoryTestBase
     {
+        private Consumer CreateTestConsumer(string consumerKey)
+        {
+            Consumer retVal = new Consumer();
+            retVal.ConsumerKey = consumerKey;
+            retVal.AccessTokenLifetime = 5000;
+            retVal.AutoGrant = true;
+            retVal.ConsumerSecret = Guid.NewGuid().ToString("N");
+            retVal.ContactEmail = "foo@foo.com";
+            retVal.Name = "Foo";
+
+            return retVal;
+        }
+
         private RequestToken CreateTestRequestToken(string token, string tokenSecret)
         {
             OAuthKeyConfiguration keyConfiguration = OAuthKeyConfiguration.GetInstance();
@@ -131,6 +144,7 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
         [Test]
         public void RequestTokenRepositoryTestGetAccessTokenByRequestToken()
         {
+            Consumer consumer = this.CreateTestConsumer();
             RequestToken requestToken = this.RepositoryManager.RequestTokenRepository.GetByToken(TokenConstants.TestRequestToken);
             
             if (requestToken == null)
@@ -158,20 +172,7 @@ namespace AlwaysMoveForward.OAuth.DevDefined.UnitTests.IntegrationTests.Reposito
 
                 if (accessToken == null)
                 {
-                    AccessToken newAccessToken = new AccessToken
-                    {
-                        ConsumerKey = requestToken.ConsumerKey,
-                        DateGranted = DateTime.UtcNow,
-                        ExpirationDate = DateTime.UtcNow.AddDays(20),
-                        Realm = requestToken.Realm,
-                        Token = TokenConstants.TestAccessToken,
-                        Secret = TokenConstants.TestAccessTokenSecret,
-                        UserName = requestToken.UserName,
-                        UserId = requestToken.UserId
-                    };
-
-                    requestToken.AccessToken = newAccessToken;
-                    requestToken.State = TokenState.AccessGranted;
+                    accessToken = requestToken.GrantAccessToken(consumer);
 
                     using (this.UnitOfWork.BeginTransaction())
                     {
