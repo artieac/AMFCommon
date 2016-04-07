@@ -21,7 +21,9 @@
 		<org.mapstruct.version>1.1.0.Beta1</org.mapstruct.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<docker.image.prefix>springio</docker.image.prefix>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<docker.image.prefix>artieac</docker.image.prefix>
 	</properties>
 
 	<dependencies>
@@ -32,10 +34,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -55,6 +53,16 @@
 	</dependencies>
 	
 	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/Dockerfile</include>
+				</includes>
+			</resource>
+
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -79,40 +87,19 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.3.5</version>
+				<version>0.3.9</version>
 				<configuration>
 					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
 					<dockerDirectory>src/main/docker</dockerDirectory>
 					<resources>
 						<resource>
-							<targetPath>/</targetPath>
 							<directory>${project.build.directory}</directory>
 							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
-
-					<imageName>docker-registry.products.vistaprint.io/storefront-product-service:${project.version}
-					</imageName>
-					<baseImage>docker-registry.products.vistaprint.io/java-alpine:1.0.1</baseImage>
-					<serverId>vp-product-docker-registry</serverId>
-					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-					<registryUrl>https://docker-registry.products.vistaprint.io/</registryUrl>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.basedir}/deploy</directory>
-							<include>newrelic.yml</include>
 						</resource>
 					</resources>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-	
 
 </project>
