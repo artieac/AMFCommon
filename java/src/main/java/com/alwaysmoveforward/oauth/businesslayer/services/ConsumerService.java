@@ -14,35 +14,35 @@ import java.util.List;
  */
 @Component("ConsumerService")
 public class ConsumerService {
-//    @Autowired
-//    @Qualifier("ConsumerRepository")
-//    IConsumerRepository consumerRepository;
+    @Autowired
+    @Qualifier("ConsumerRepository")
+    IConsumerRepository consumerRepository;
 
-//    public List<Consumer> findAll(){
-//        return consumerRepository.findAll();
-//    }
+    public List<Consumer> findAll(){
+        return consumerRepository.findAll();
+    }
 
-//    public Consumer findByConsumerKey(String consumerKey){
-//        return consumerRepository.findByConsumerKey(consumerKey);
-//    }
+    public Consumer findByConsumerKey(String consumerKey){
+        return consumerRepository.findByConsumerKey(consumerKey);
+    }
 
-//    public List<Consumer> findByContactEmail(String contactEmail){
-//        return consumerRepository.findByContactEmail(contactEmail);
-//    }
+    public List<Consumer> findByContactEmail(String contactEmail){
+        return consumerRepository.findByContactEmail(contactEmail);
+    }
 
-//    public Consumer findByRequestToken(String requestToken){
-//        return consumerRepository.findByRequestToken(requestToken);
-//    }
+    public Consumer findByRequestToken(String requestToken){
+        return consumerRepository.findByRequestToken(requestToken);
+    }
 
-//    @Transactional
-//    public Consumer save(String consumerKey, String newEmail){
-//        Consumer retVal = consumerRepository.findByConsumerKey(consumerKey);
+    @Transactional
+    public Consumer save(String consumerKey, String newEmail){
+        Consumer retVal = consumerRepository.findByConsumerKey(consumerKey);
 
-//        if(retVal!=null){
-//            retVal.setContactEmail(newEmail);
-//            retVal = consumerRepository.save(retVal);
-//        }
+        if(retVal!=null){
+            retVal.setContactEmail(newEmail);
+            retVal = consumerRepository.save(retVal);
+        }
 
-//        return retVal;
-//    }
+        return retVal;
+    }
 }

@@ -3,6 +3,6 @@ FROM frolvlad/alpine-oraclejdk8:full
 
 VOLUME /tmp
 
-ADD /target/oauth.1.3.3.RELEASE.jar /oauth.jar
-RUN sh -c 'touch /oauth.jar'
-ENTRYPOINT ["java", "-Djava.security.egd-file:/dev/./urandom","-jar","/oauth.jar"]
+ADD oauth-1.3.3.RELEASE.jar oauth.jar
+RUN sh -c 'touch oauth.jar'
+ENTRYPOINT ["java", "-Djava.security.egd-file:/dev/./urandom","-jar","oauth.jar"]

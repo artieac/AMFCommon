@@ -26,15 +26,9 @@ public class ConsumerController
      *
      * @return {@link Consumer}
      */
-//    @RequestMapping(value = "/consumers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Consumer> getAll()
-//    {
-//        return this.consumerService.findAll();
-//    }
-
-    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getTest()
+    @RequestMapping(value = "/consumers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Consumer> getAll()
     {
-        return "Test";
+        return this.consumerService.findAll();
     }
 }

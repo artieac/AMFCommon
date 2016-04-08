@@ -16,12 +16,12 @@ public class UserService {
     public UserService(){
     }
 
-//    @Autowired
-//    @Qualifier("JPAUserRepository")
-//    IUserRepository userRepository;
+    @Autowired
+    @Qualifier("JPAUserRepository")
+    IUserRepository userRepository;
 
-//    public User findById(Long id){
-//        return userRepository.findById(id);
-//    }
+    public User findById(Long id){
+        return userRepository.findById(id);
+    }
 
 }
