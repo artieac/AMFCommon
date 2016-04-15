@@ -34,6 +34,9 @@ public class DataSourceEncryption
     @Value("${spring.datasource.password}")
     private String encyrptedDatabasePassword;
 
+    @Value ("${alwaysmoveforward.datasource.isencrypted}")
+    private Boolean isEncrypted;
+
     @Bean
     public DataSource datasource() throws IOException
     {
@@ -41,11 +44,19 @@ public class DataSourceEncryption
         ds.setDriverClassName(databaseDriverClassName);
         ds.setUrl(datasourceUrl);
 
-        AESManager aesManager = new AESManager(aesConfiguration);
-        this.encryptedDatabaseUsername = aesManager.Encrypt(this.encryptedDatabaseUsername);
-        ds.setUsername(aesManager.Decrypt(encryptedDatabaseUsername));
-        this.encyrptedDatabasePassword = aesManager.Encrypt(this.encyrptedDatabasePassword);
-        ds.setPassword(aesManager.Decrypt(encyrptedDatabasePassword));
+        if(this.isEncrypted)
+        {
+            AESManager aesManager = new AESManager(aesConfiguration);
+            this.encryptedDatabaseUsername = aesManager.Encrypt(this.encryptedDatabaseUsername);
+            ds.setUsername(aesManager.Decrypt(encryptedDatabaseUsername));
+            this.encyrptedDatabasePassword = aesManager.Encrypt(this.encyrptedDatabasePassword);
+            ds.setPassword(aesManager.Decrypt(encyrptedDatabasePassword));
+        }
+        else
+        {
+            ds.setUsername(encryptedDatabaseUsername);
+            ds.setPassword(encyrptedDatabasePassword);
+        }
 
         return ds;
     }
